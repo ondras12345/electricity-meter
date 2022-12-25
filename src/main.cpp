@@ -16,8 +16,8 @@ File log_file;
 static volatile unsigned long pulses = 0;
 
 
-#define SAMPLING_FREQUENCY 500  // Hz
-#define DEBOUNCE_TIME 15  // ms
+#define SAMPLING_FREQUENCY 1000  // Hz
+#define DEBOUNCE_TIME 8  // ms
 #define INTEGRATOR_MAX (DEBOUNCE_TIME * SAMPLING_FREQUENCY / 1000)
 static void read_sensor()
 {
