@@ -8,6 +8,7 @@
 #define pin_sensor 2
 
 #define DATE_FORMAT "YYYY-MM-DD hh:mm:ss"
+#define LOG_INTERVAL_MINUTES 1
 
 RTC_DS3231 rtc;
 
@@ -167,7 +168,7 @@ void loop()
         prev = now;
         write_check_interval = WRITE_CHECK_INTERVAL;
         DateTime time = rtc.now();
-        if (time.minute() % 5 == 0 && time.second() == 0)
+        if (time.minute() % LOG_INTERVAL_MINUTES == 0 && time.second() == 0)
         {
             write_check_interval = 1500UL;  // do not trigger again during this second
             noInterrupts();
