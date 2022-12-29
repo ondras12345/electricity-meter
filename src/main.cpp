@@ -3,6 +3,8 @@
 #include <SD.h>
 #include <TimerOne.h>
 
+#include "cli.h"
+
 #define pin_SD_SS 10
 #define pin_umount 7
 #define pin_sensor 2
@@ -92,6 +94,8 @@ void setup()
 
     delay(500);  // wait for power to stabilize
 
+    CLI_init();
+
     if (!rtc.begin())
     {
         for (;;)
@@ -177,4 +181,6 @@ void loop()
             write_log(time, sensor_pulses);
         }
     }
+
+    CLI_loop();
 }
