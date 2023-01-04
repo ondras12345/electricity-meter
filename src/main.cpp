@@ -3,8 +3,6 @@
 #include <SD.h>
 #include <TimerOne.h>
 
-#include "cli.h"
-
 #define pin_SD_SS 10
 #define pin_umount 7
 #define pin_sensor 2
@@ -84,6 +82,81 @@ void write_log(DateTime now, unsigned long sensor_pulses)
 }
 
 
+void conf_time()
+{
+    Serial.println(F("RTC config"));
+    unsigned int year = 0;
+    do
+    {
+        year = 0;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC year: "));
+        while (!Serial.available());
+        year = Serial.parseInt();
+    } while (year < 2000 || year > 2099);
+
+    unsigned int month = 0;
+    do
+    {
+        month = 0;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC month: "));
+        while (!Serial.available());
+        month = Serial.parseInt();
+    } while (month < 1 || month > 12);
+
+    unsigned int day = 0;
+    do
+    {
+        day = 0;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC day: "));
+        while (!Serial.available());
+        day = Serial.parseInt();
+    } while (day < 1 || day > 31);
+
+    unsigned int hour = 100;
+    do
+    {
+        hour = 100;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC hour: "));
+        while (!Serial.available());
+        hour = Serial.parseInt();
+    } while (hour >= 24);
+
+    unsigned int minute = 100;
+    do
+    {
+        minute = 100;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC minute: "));
+        while (!Serial.available());
+        minute = Serial.parseInt();
+    } while (minute >= 60);
+
+    unsigned int second = 100;
+    do
+    {
+        second = 100;
+        while (Serial.available()) Serial.read();
+        Serial.println(F("RTC second: "));
+        while (!Serial.available());
+        second = Serial.parseInt();
+    } while (second >= 60);
+
+    DateTime new_dt(year, month, day, hour, minute, second);
+    if (!new_dt.isValid())
+    {
+        Serial.println(F("Bad datetime, ignored"));
+        return;
+    }
+
+    rtc.adjust(new_dt);
+    Serial.println(F("datetime set"));
+}
+
+
 void setup()
 {
     pinMode(pin_umount, INPUT_PULLUP);
@@ -91,10 +164,19 @@ void setup()
 
     Serial.begin(115200);
     Serial.println(F("elektromer-logger"));
+    Serial.println(F("press c to enter config"));
 
     delay(500);  // wait for power to stabilize
 
-    CLI_init();
+    bool config = false;
+    while (Serial.available())
+    {
+        if (Serial.read() == 'c')
+        {
+            config = true;
+        }
+
+    }
 
     if (!rtc.begin())
     {
@@ -117,6 +199,12 @@ void setup()
     time.toString(time_str);
     Serial.print(F("RTC time: "));
     Serial.println(time_str);
+
+    if (config)
+    {
+        conf_time();
+        config = false;
+    }
 
     if (!SD.begin(pin_SD_SS))
     {
@@ -181,6 +269,4 @@ void loop()
             write_log(time, sensor_pulses);
         }
     }
-
-    CLI_loop();
 }
