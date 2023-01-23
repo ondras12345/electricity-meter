@@ -250,12 +250,15 @@ void setup()
         bool valid = false;
         while (!valid)
         {
-            do
+            if (!Serial.available())
             {
-                Serial.println(F("config: 't' time, 'f' file, 'x' exit"));
-                delay(500);
+                do
+                {
+                    Serial.println(F("config: 't' time, 'f' file, 'x' exit"));
+                    delay(500);
+                }
+                while (!Serial.available());
             }
-            while (!Serial.available());
             switch (Serial.read())
             {
                 case 't':
