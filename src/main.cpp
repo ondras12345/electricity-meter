@@ -9,6 +9,7 @@
 
 #define DATE_FORMAT "YYYY-MM-DD hh:mm:ss"
 #define LOG_INTERVAL_MINUTES 1
+#define LOG_FILENAME "elektro.log"
 
 RTC_DS3231 rtc;
 
@@ -84,7 +85,7 @@ void write_log(DateTime now, unsigned long sensor_pulses)
 
 void conf_time()
 {
-    Serial.println(F("RTC config"));
+    Serial.println(F("RTC config - set UTC"));
     unsigned int year = 0;
     do
     {
@@ -157,6 +158,43 @@ void conf_time()
 }
 
 
+void conf_file()
+{
+    while (Serial.available()) Serial.read();
+
+    for (;;)
+    {
+        Serial.println(F("'d' dump, 'r' rm file, 'x' exit"));
+        switch (Serial.read())
+        {
+            case 'd':
+                {
+                    File f = SD.open(LOG_FILENAME);
+                    if (!f)
+                    {
+                        Serial.println(F("file not found"));
+                        break;
+                    }
+                    Serial.println(F("--- BEGIN LOG FILE ---"));
+                    while (f.available()) Serial.write(f.read());
+                    Serial.println(F("--- END LOG FILE ---"));
+                    f.close();
+                }
+                break;
+
+            case 'r':
+                Serial.println(F("Press button to confirm file rm"));
+                while (digitalRead(pin_umount));
+                SD.remove(LOG_FILENAME);
+                break;
+
+            case 'x':
+                return;
+        }
+    }
+}
+
+
 void setup()
 {
     pinMode(pin_umount, INPUT_PULLUP);
@@ -197,12 +235,35 @@ void setup()
     DateTime time = rtc.now();
     char time_str[] = DATE_FORMAT;
     time.toString(time_str);
-    Serial.print(F("RTC time: "));
+    Serial.print(F("RTC time (UTC): "));
     Serial.println(time_str);
 
+    bool config_file = false;
     if (config)
     {
-        conf_time();
+        while (Serial.available()) Serial.read();
+        bool valid = false;
+        while (!valid)
+        {
+            Serial.println(F("config: 't' time, 'f' file, 'x' exit"));
+            switch (Serial.read())
+            {
+                case 't':
+                    conf_time();
+                    valid = true;
+                    break;
+
+                case 'f':
+                    config_file = true;
+                    valid = true;
+                    break;
+
+                case 'x':
+                    valid = true;
+                    break;
+            }
+        }
+
         config = false;
     }
 
@@ -215,7 +276,13 @@ void setup()
         }
     }
 
-    log_file = SD.open("elektro.log", FILE_WRITE);  // this should append
+    if (config_file)
+    {
+        conf_file();
+        config_file = false;
+    }
+
+    log_file = SD.open(LOG_FILENAME, FILE_WRITE);  // this should append
     log_file.print(F("--------\n"));
 
     Timer1.initialize(1000000UL / SAMPLING_FREQUENCY);
