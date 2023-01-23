@@ -86,60 +86,54 @@ void write_log(DateTime now, unsigned long sensor_pulses)
 void conf_time()
 {
     Serial.println(F("RTC config - set UTC"));
-    unsigned int year = 0;
+    unsigned int year;
     do
     {
-        year = 0;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC year: "));
         while (!Serial.available());
         year = Serial.parseInt();
     } while (year < 2000 || year > 2099);
 
-    unsigned int month = 0;
+    unsigned int month;
     do
     {
-        month = 0;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC month: "));
         while (!Serial.available());
         month = Serial.parseInt();
     } while (month < 1 || month > 12);
 
-    unsigned int day = 0;
+    unsigned int day;
     do
     {
-        day = 0;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC day: "));
         while (!Serial.available());
         day = Serial.parseInt();
     } while (day < 1 || day > 31);
 
-    unsigned int hour = 100;
+    unsigned int hour;
     do
     {
-        hour = 100;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC hour: "));
         while (!Serial.available());
         hour = Serial.parseInt();
     } while (hour >= 24);
 
-    unsigned int minute = 100;
+    unsigned int minute;
     do
     {
-        minute = 100;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC minute: "));
         while (!Serial.available());
         minute = Serial.parseInt();
     } while (minute >= 60);
 
-    unsigned int second = 100;
+    unsigned int second;
     do
     {
-        second = 100;
         while (Serial.available()) Serial.read();
         Serial.println(F("RTC second: "));
         while (!Serial.available());
