@@ -164,7 +164,12 @@ void conf_file()
 
     for (;;)
     {
-        Serial.println(F("'d' dump, 'r' rm file, 'x' exit"));
+        do
+        {
+            Serial.println(F("'d' dump, 'r' rm file, 'x' exit"));
+            delay(500);
+        } while (!Serial.available());
+
         switch (Serial.read())
         {
             case 'd':
@@ -245,7 +250,12 @@ void setup()
         bool valid = false;
         while (!valid)
         {
-            Serial.println(F("config: 't' time, 'f' file, 'x' exit"));
+            do
+            {
+                Serial.println(F("config: 't' time, 'f' file, 'x' exit"));
+                delay(500);
+            }
+            while (!Serial.available());
             switch (Serial.read())
             {
                 case 't':
