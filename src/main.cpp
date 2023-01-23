@@ -181,7 +181,12 @@ void conf_file()
                         break;
                     }
                     Serial.println(F("--- BEGIN LOG FILE ---"));
-                    while (f.available()) Serial.write(f.read());
+                    while (f.available())
+                    {
+                        char c = f.read();
+                        if (c == '\n') Serial.write('\r');
+                        Serial.write(c);
+                    }
                     Serial.println(F("--- END LOG FILE ---"));
                     f.close();
                 }
