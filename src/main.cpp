@@ -347,5 +347,15 @@ void loop()
             interrupts();
             write_log(time, sensor_pulses);
         }
+
+        // close and reopen file at noon - never lose more than a day of data
+        if (time.hour() == 12 && time.minute() == 0 && time.second() == 0)
+        {
+            if (log_file)
+            {
+                log_file.close();
+                log_file = SD.open(LOG_FILENAME, FILE_WRITE);  // append
+            }
+        }
     }
 }
