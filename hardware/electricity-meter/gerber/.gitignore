@@ -1,0 +1,6 @@
+# pcb2gcode temporary files
+*.svg
+
+# pcb2gcode outputs
+*.ngc
+pcb2gcode.log
