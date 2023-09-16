@@ -18,7 +18,7 @@ void analogpulse_sample(analogpulse_t * ctx, uint16_t sample)
 {
     uint32_t tmp;
     tmp = ctx->min + ctx->decay_speed;
-    if (tmp > ctx->min) ctx->min += tmp;
+    if (tmp > ctx->min) ctx->min = tmp;
     else ctx->min = -1;
     tmp = ctx->max - ctx->decay_speed;
     if (tmp < ctx->max) ctx->max = tmp;
