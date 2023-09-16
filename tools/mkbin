@@ -1,0 +1,16 @@
+#!/bin/bash
+file=.pio/build/bluepill_f103c8/firmware.bin
+if [ ! -f "$file" ] ; then
+    echo "Compiled binary file does not exist."
+    exit 1
+fi
+
+id="$(git describe --dirty --always)"
+
+filename=$(basename "$file")
+newfile="${filename/.bin/_$id.bin}"
+echo "$newfile"
+
+chmod -x "$file"
+mv -i "$file" "bin/$newfile"
+rsync -avR -e ssh tools/upload tools/upload_latest "bin/$newfile" ntb1:source/repos/electricity-meter/

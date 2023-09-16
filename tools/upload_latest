@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+latest=$(ls -t bin/firmware_*.bin | head -1)
+echo "Latest file is $latest"
+stat -c "%y %n" "$latest"
+
+lastUpdate="$(stat -c %Y "$latest")"
+now="$(date +%s)"
+diff=$((now-lastUpdate))
+echo "Modified $diff seconds ago."
+
+read -p "upload? [yN]" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    "$(dirname "$0")/upload" /dev/ttyUSB0 "$latest"
+fi

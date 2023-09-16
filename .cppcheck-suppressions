@@ -1,0 +1,6 @@
+# Warnings from 3rd party libraries
+# seems like I need a wildcard before .pio
+noExplicitConstructor:*/.pio/libdeps/*
+noConstructor:*/.pio/libdeps/*/Commander-API/*
+uninitMemberVarPrivate:*/.pio/libdeps/*/Commander-API/src/*
+preprocessorErrorDirective:*/.pio/libdeps/*/STM32duino RTC/src/STM32RTC.h

@@ -3,3 +3,4 @@
 compile_commands.json
 bin/
 tools/avrdude.conf
+include/version.h
