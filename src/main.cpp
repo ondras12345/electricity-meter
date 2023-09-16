@@ -15,6 +15,15 @@ void setup()
 
     Serial.begin();
 
+    // wait for serial to initialize
+    for (uint_fast8_t i = 0; i < 4; i++)
+    {
+        LED_STATUS(true);
+        delay(100);
+        LED_STATUS(false);
+        delay(100);
+    }
+
     rtc_init();
     pulse_counter_init();
     datalogger_init();
@@ -22,7 +31,7 @@ void setup()
 
     LED_STATUS(true);
     DEBUG->println("boot");
-    delay(100);
+    delay(500);
     LED_STATUS(false);
 }
 
