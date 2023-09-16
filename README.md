@@ -30,3 +30,5 @@
   - + 3v3 SD card
   - + enough flash for fully featured command line
 - RS485 modbus? - would need optical isolation
+  - https://github.com/arduino-libraries/ArduinoModbus
+  - https://github.com/arduino-libraries/ArduinoRS485
