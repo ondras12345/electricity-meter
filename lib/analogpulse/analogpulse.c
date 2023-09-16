@@ -38,7 +38,7 @@ void analogpulse_sample(analogpulse_t * ctx, uint16_t sample)
  */
 bool analogpulse_valid(analogpulse_t * ctx)
 {
-    uint32_t min_plus = ctx->min + ctx->min_amplitude;
+    uint32_t min_plus = ctx->min + ((uint32_t)(ctx->min_amplitude)<<8);
     if (min_plus < ctx->min) min_plus = ctx->min;
 
     return min_plus < ctx->max;
