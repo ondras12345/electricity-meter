@@ -65,21 +65,39 @@ static void cmnd_rtc(char *args, Stream *response)
     {
         // this is ok, just print time and exit
     }
-    else if (strcmp(subcommand, "set"))
+    else if (strcmp(subcommand, "set") == 0)
     {
         unsigned int year, month, day, hours, minutes, seconds;
-        if (sscanf(args, "%04u-%02u-%02uT%02u:%02u:%02uZ",
-                   &year, &month, &day, &hours, &minutes, &seconds))
+        char c;  // we should NOT find any extra chars
+        char Z;  // 'Z' in ISO8601 datetime
+        if (sscanf(args, "%04u-%02u-%02uT%02u:%02u:%02u%c%c",
+                   &year, &month, &day, &hours, &minutes, &seconds, &Z, &c) != 7)
         {
             response->println("error: could not parse args");
             goto bad;
         }
+        if (Z != 'Z')
+        {
+            response->println("error: not a UTC datetime");
+            goto bad;
+        }
+        if (year < 2000 || year > 3000)
+        {
+            response->println("error: invalid year");
+            goto bad;
+        }
+        year -= 2000;
         if (!rtc_set_date(day, month, year))
         {
             response->println("error: invalid (illogical) date");
             goto bad;
         }
         rtc_set_time(hours, minutes, seconds);
+    }
+    else
+    {
+        response->println("error: invalid subcommand");
+        goto bad;
     }
 
     rtc_refresh();
