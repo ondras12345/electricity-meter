@@ -43,7 +43,7 @@ void datalogger_loop()
     static unsigned long prev_millis = 0;
     unsigned long now = millis();
     bool too_early = now - prev_millis <= 1500UL;
-    bool too_late = now - prev_millis >= 6200UL;
+    bool too_late = now - prev_millis >= 62000UL;
     if ((rtc_seconds == 0 && !too_early) || too_late)
     {
         prev_millis = now;
