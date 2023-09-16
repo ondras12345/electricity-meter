@@ -35,19 +35,25 @@ static void cmnd_ver(char *args, Stream *response)
 static void cmnd_pulse(char *args, Stream *response)
 {
     analogpulse_t ap = pulse_counter_get_analogpulse();
-    response->print("count: ");
+    response->println("configuration:");
+    response->print("  min_amplitude: ");
+    response->println(ap.min_amplitude);
+    response->print("  decay_speed: ");
+    response->println(ap.decay_speed);
+    response->println("state:");
+    response->print("  count: ");
     response->println(pulse_counter_get_count());
-    response->print("valid: ");
+    response->print("  valid: ");
     response->println(analogpulse_valid(&ap));
-    response->print("sample: ");
+    response->print("  sample: ");
     response->println(ap.sample);
-    response->print("threshold: ");
+    response->print("  threshold: ");
     response->println(analogpulse_threshold(&ap));
-    response->print("digital: ");
+    response->print("  digital: ");
     response->println(ap.digital);
-    response->print("min: ");
+    response->print("  min: ");
     response->println(ap.min);
-    response->print("max: ");
+    response->print("  max: ");
     response->println(ap.max);
 }
 
