@@ -23,5 +23,5 @@ void hardware_init()
     digitalWrite(PIN_SPI_SS_FLASH, HIGH);
 
     pinMode(PIN_PULSE_COUNTER, INPUT);
-    analogReadResolution(12);
+    analogReadResolution(ADC_RESOLUTION_BITS);
 }

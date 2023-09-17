@@ -15,6 +15,8 @@
 #define PIN_SPI_SS_FLASH PA4
 #define PIN_PULSE_COUNTER PA2
 
+#define ADC_RESOLUTION_BITS 12
+
 
 // LEDs are active low
 #define LED_STATUS(state) digitalWrite(PIN_LED_STATUS, !state)

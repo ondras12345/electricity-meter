@@ -8,6 +8,7 @@
 #include "version.h"
 #include "pulse_counter_advanced.h"
 #include "rtc.h"
+#include "hardware.h"
 
 
 static Shellminator shell(&Serial);
@@ -51,10 +52,31 @@ static void cmnd_pulse(char *args, Stream *response)
     response->println(analogpulse_threshold(&ap));
     response->print("  digital: ");
     response->println(ap.digital);
-    response->print("  min: ");
-    response->println(ap.min);
-    response->print("  max: ");
-    response->println(ap.max);
+    response->printf(
+        "  min: %u.%02u (%" PRIu32 ")\r\n",
+        ap.min/256,
+        (ap.min % 256)*100 / 256,
+        ap.min
+    );
+    response->printf(
+        "  max: %u.%02u (%" PRIu32 ")\r\n",
+        ap.max/256,
+        (ap.max % 256)*100 / 256,
+        ap.max
+    );
+    response->print("  amplitude: ");
+    if (ap.max > ap.min)
+    {
+        uint32_t amplitude = ap.max - ap.min;
+        const uint16_t max_reading = (1<<ADC_RESOLUTION_BITS) - 1;
+        uint32_t percentage = amplitude / 256 * 10000 / max_reading;
+        response->printf(
+            "%u.%02u%%\r\n",
+            percentage / 100,
+            percentage % 100
+        );
+    }
+    else response->println('-');
 }
 
 
