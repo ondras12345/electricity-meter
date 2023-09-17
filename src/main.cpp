@@ -6,8 +6,6 @@
 #include "cli.h"
 #include "datalogger.h"
 
-#include <SPI.h>  // TODO testing RTClib
-
 
 void setup()
 {
