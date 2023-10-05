@@ -1,19 +1,11 @@
 #include "rtc.h"
 #include <STM32RTC.h>
 #include <Arduino.h>
-#include <RTClib.h>
 #include "debug.h"
 
 static STM32RTC& rtc = STM32RTC::getInstance();
 
-uint8_t rtc_hours = 0;
-uint8_t rtc_minutes = 0;
-uint8_t rtc_seconds = 0;
-uint32_t rtc_subSeconds = 0;
-uint8_t rtc_day = 0;
-uint8_t rtc_month = 0;
-uint8_t rtc_year = 0;
-uint32_t rtc_epoch_2000 = 0;
+DateTime rtc_time;
 
 
 void rtc_init()
@@ -44,10 +36,22 @@ void rtc_loop()
 
 void rtc_refresh()
 {
+    uint8_t rtc_hours = 0;
+    uint8_t rtc_minutes = 0;
+    uint8_t rtc_seconds = 0;
+    uint32_t rtc_subSeconds = 0;
+    uint8_t rtc_day = 0;
+    uint8_t rtc_month = 0;
+    uint8_t rtc_year = 0;
+
     rtc.getTime(&rtc_hours, &rtc_minutes, &rtc_seconds, &rtc_subSeconds);
     // we don't care about weekday
     rtc.getDate(nullptr, &rtc_day, &rtc_month, &rtc_year);
-    rtc_epoch_2000 = rtc.getY2kEpoch();
+    // I'm pretty sure that rtc.getY2kEpoch returns signed int,
+    // and I don't think it handles year 2038 overflow properly, either.
+    //rtc_epoch_2000 = rtc.getY2kEpoch();
+    rtc_time = DateTime(rtc_year, rtc_month, rtc_day,
+                        rtc_hours, rtc_minutes, rtc_seconds);
 }
 
 

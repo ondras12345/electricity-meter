@@ -11,6 +11,7 @@
 #include "pulse_counter_advanced.h"
 #include "rtc.h"
 #include "hardware.h"
+#include "datalogger.h"
 
 
 static Shellminator shell(&Serial);
@@ -128,8 +129,8 @@ static void cmnd_rtc(char *args, Stream *response)
 
     response->printf(
         "time: 20%02u-%02u-%02uT%02u:%02u:%02uZ\r\n",
-        rtc_year, rtc_month, rtc_day,
-        rtc_hours, rtc_minutes, rtc_seconds
+        rtc_time.year(), rtc_time.month(), rtc_time.day(),
+        rtc_time.hour(), rtc_time.minute(), rtc_time.second()
     );
     return;
 bad:
@@ -314,13 +315,68 @@ bad:
 }
 
 
+static void cmnd_datalogger(char *args, Stream *response)
+{
+    // We should probably only read one file at a time to prevent blocking the
+    // system for too long.
+    // We might as well have the user enter the data file number.
+    unsigned int fileno = 0;
+    bool valid = (
+        sscanf(args, "%u", &fileno) == 1
+        && fileno < DATALOGGER_FILE_COUNT
+    );
+    SerialFlashFile f;  // needs to be declared before goto
+    if (!valid)
+    {
+        response->println("invalid file_no");
+        goto usage;
+    }
+    f = SerialFlash.open(datalogger_file_number_to_filename(fileno));
+    if (!f)
+    {
+        // This should never happen
+        response->println("e: could not open file");
+        return;
+    }
+    response->println("---");
+    response->println("# datetime\tenergy [1/10 Wh]");
+    // It might be faster to read the whole page,
+    // but I think Serial will be the bottleneck.
+    // TODO verify
+    for (uint32_t i = 0; i < DATALOGGER_FILE_RECORDS; i++)
+    {
+        datalogger_record_t record;
+        f.read(&record, sizeof record);
+        if (datalogger_record_empty(record))
+        {
+            response->println("# END OF VALID RECORDS");
+            break;
+        }
+        DateTime t(record.timestamp + SECONDS_FROM_1970_TO_2000);
+        response->printf(
+            "20%02u-%02u-%02uT%02u:%02u:%02uZ\t%u\r\n",
+            t.year(), t.month(), t.day(),
+            t.hour(), t.minute(), t.second(),
+            record.pulses
+        );
+    }
+    response->println("---");
+    return;
+usage:
+    response->println(
+        "Usage: datalogger file_no"
+    );
+}
+
+
 static Commander::API_t API_tree[] = {
     apiElement("reset",         "Reset the MCU.",                           cmnd_reset),
     apiElement("ver",           "Print out version info.",                  cmnd_ver),
     apiElement("pulse",         "Get pulse counter status.",                cmnd_pulse),
     apiElement("rtc",           "Get or set RTC time.",                     cmnd_rtc),
     apiElement("speedtest",     "Test Serial speed.",                       cmnd_speedtest),
-    apiElement("SPIflash",      "Issue commands to SPI flash.",              cmnd_SPIflash),
+    apiElement("SPIflash",      "Issue commands to SPI flash.",             cmnd_SPIflash),
+    apiElement("datalogger",    "Read datalogger records from SPI flash.",  cmnd_datalogger),
     // commander pre-made commands
     API_ELEMENT_MILLIS,
     API_ELEMENT_UPTIME,
