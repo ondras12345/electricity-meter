@@ -14,7 +14,7 @@ void setup()
     Serial.begin();
 
     // wait for serial to initialize
-    for (uint_fast8_t i = 0; i < 4; i++)
+    for (uint_fast8_t i = 0; i < 8; i++)
     {
         LED_STATUS(true);
         delay(100);
@@ -22,9 +22,13 @@ void setup()
         delay(100);
     }
 
+    DEBUG->println("rtc_init");
     rtc_init();
+    DEBUG->println("pulse_counter_init");
     pulse_counter_init();
+    DEBUG->println("datalogger_init");
     datalogger_init();
+    DEBUG->println("cli_init");
     cli_init();
 
     LED_STATUS(true);

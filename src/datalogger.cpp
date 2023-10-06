@@ -11,30 +11,21 @@ static uint_fast8_t datalogger_current_file_index = -1;  // -1 means invalid
 static uint32_t datalogger_current_index = 0;
 
 
-static void ensure_erasable_file(const char * filename, uint32_t length)
+static bool ensure_erasable_file(const char * filename, uint32_t length)
 {
-    if (!SerialFlash.exists(filename))
+    if (SerialFlash.exists(filename))
+        return true;
+
+    DEBUG->print("Creating file: ");
+    DEBUG->print(filename);
+    DEBUG->print(" ... ");
+    if (!SerialFlash.createErasable(filename, length))
     {
-        bool retry = false;
-tryagain:
-        if (!SerialFlash.createErasable(filename, length))
-        {
-            if (retry)
-            {
-                Serial.println("Failed to create file, even after chip erase");
-                return;
-            }
-            DEBUG->print("Failed to create file: ");
-            DEBUG->println(filename);
-            SerialFlash.eraseAll();
-            while (!SerialFlash.ready())
-            {
-                // TODO reset WDT ?
-            }
-            retry = true;
-            goto tryagain;
-        }
+        DEBUG->println("failed");
+        return false;
     }
+    DEBUG->println("OK");
+    return true;
 }
 
 
@@ -110,9 +101,22 @@ void datalogger_init()
     DEBUG->println(SerialFlash.begin(PIN_SPI_SS_FLASH));
 
     DEBUG->println("creating files...");
+    bool error = false;
     for (uint_fast8_t i = 0; i < DATALOGGER_FILE_COUNT; i++)
     {
-        ensure_erasable_file(datalogger_file_number_to_filename(i), DATALOGGER_FILE_LENGTH);
+        if (!ensure_erasable_file(datalogger_file_number_to_filename(i), DATALOGGER_FILE_LENGTH))
+        {
+            error = true;
+            break;
+        }
+    }
+
+    // Not trying to erase flash on error to prevent data loss.
+    if (error)
+    {
+        DEBUG->println("Critical: failed to create file");
+        // If this ever happens, you should try to erase the chip.
+        return;
     }
 
     DEBUG->println("searching for last record");
