@@ -162,7 +162,7 @@ void datalogger_init()
     uint32_t left = 0;
     uint32_t right = DATALOGGER_FILE_RECORDS - 1;
     uint32_t last_valid = -1;
-    while (left <= right && right > 0)
+    while (left <= right)
     {
         DEBUG->print("l=");
         DEBUG->print(left);
@@ -177,7 +177,11 @@ void datalogger_init()
             last_valid = mid;
             left = mid+1;
         }
-        else right = mid-1;
+        else
+        {
+            if (right == 0) break;
+            right = mid-1;
+        }
     }
     // If no valid record was found, last_valid was initialized to
     // (uint32_t)(-1), so last_valid+1 == 0 and everything still works.
