@@ -161,8 +161,12 @@ void datalogger_init()
     uint32_t left = 0;
     uint32_t right = DATALOGGER_FILE_RECORDS - 1;
     uint32_t last_valid = -1;
-    while (left <= right)
+    while (left <= right && right > 0)
     {
+        DEBUG->print("l=");
+        DEBUG->print(left);
+        DEBUG->print(" r=");
+        DEBUG->println(right);
         uint32_t mid = (left + right) / 2;
         datalogger_record_t record;
         f.seek(mid * sizeof(record));
@@ -177,6 +181,8 @@ void datalogger_init()
     // If no valid record was found, last_valid was initialized to
     // (uint32_t)(-1), so last_valid+1 == 0 and everything still works.
     datalogger_current_index = last_valid+1;
+    DEBUG->print("datalogger_current_index=");
+    DEBUG->println(datalogger_current_index);
 }
 
 
