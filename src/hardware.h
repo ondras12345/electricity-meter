@@ -8,7 +8,7 @@
 #define PIN_LED_PULSE PB13
 #define PIN_LED_FILTERED PC13
 
-#define PIN_BTN_UMOUNT PB14
+#define PIN_BTN_1 PB14
 
 #define PIN_MODBUS_DE PA1
 
@@ -23,7 +23,7 @@
 #define LED_PULSE(state) digitalWrite(PIN_LED_PULSE, !state)
 #define LED_FILTERED(state) digitalWrite(PIN_LED_FILTERED, !state)
 
-#define BUTTON_UMOUNT (!digitalRead(PIN_BTN_UMOUNT))
+#define BUTTON_1 (!digitalRead(PIN_BTN_1))
 #define SWITCH_DIP_1 digitalRead(PIN_DIP_SW_1)
 #define SWITCH_DIP_2 digitalRead(PIN_DIP_SW_2)
 

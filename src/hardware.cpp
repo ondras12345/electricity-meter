@@ -9,7 +9,7 @@ void hardware_init()
     pinMode(PIN_LED_FILTERED, OUTPUT);
     LED_FILTERED(false);
 
-    pinMode(PIN_BTN_UMOUNT, INPUT);
+    pinMode(PIN_BTN_1, INPUT);
     pinMode(PIN_DIP_SW_1, INPUT_PULLDOWN);
     pinMode(PIN_DIP_SW_2, INPUT_PULLDOWN);
 

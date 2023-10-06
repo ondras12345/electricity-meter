@@ -78,10 +78,31 @@ void pulse_counter_init()
 
 void pulse_counter_loop()
 {
-    // reading these volatile variables is atomic (bools)
-    LED_STATUS(valid);
-    LED_PULSE(digital);
-    LED_FILTERED(digital_filtered);
+    unsigned long now = millis();
+    static unsigned long prev_millis = 0;
+    static bool LEDs_on = false;
+
+    if (LEDs_on && now - prev_millis >= 60000UL)
+    {
+        LEDs_on = false;
+        LED_STATUS(false);
+        LED_PULSE(false);
+        LED_FILTERED(false);
+    }
+
+    if (LEDs_on)
+    {
+        // reading these volatile variables is atomic (bools)
+        LED_STATUS(valid);
+        LED_PULSE(digital);
+        LED_FILTERED(digital_filtered);
+    }
+
+    if (BUTTON_1)
+    {
+        LEDs_on = true;
+        prev_millis = now;
+    }
 }
 
 
