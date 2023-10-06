@@ -128,7 +128,7 @@ static void cmnd_rtc(char *args, Stream *response)
     rtc_refresh();
 
     response->printf(
-        "time: 20%02u-%02u-%02uT%02u:%02u:%02uZ\r\n",
+        "time: %04u-%02u-%02uT%02u:%02u:%02uZ\r\n",
         rtc_time.year(), rtc_time.month(), rtc_time.day(),
         rtc_time.hour(), rtc_time.minute(), rtc_time.second()
     );
@@ -354,7 +354,7 @@ static void cmnd_datalogger(char *args, Stream *response)
         }
         DateTime t(record.timestamp + SECONDS_FROM_1970_TO_2000);
         response->printf(
-            "20%02u-%02u-%02uT%02u:%02u:%02uZ\t%u\r\n",
+            "%04u-%02u-%02uT%02u:%02u:%02uZ\t%u\r\n",
             t.year(), t.month(), t.day(),
             t.hour(), t.minute(), t.second(),
             record.pulses
