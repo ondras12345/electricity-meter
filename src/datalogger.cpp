@@ -87,6 +87,7 @@ static void write_record(datalogger_record_t record)
     SerialFlashFile f = SerialFlash.open(datalogger_file_number_to_filename(datalogger_current_file_index));
     f.seek(datalogger_current_index * sizeof(datalogger_record_t));
     f.write(&record, sizeof record);
+    datalogger_current_index++;
     if (is_last_record)
     {
         datalogger_current_index = 0;
