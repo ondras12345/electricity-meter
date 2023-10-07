@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <IWatchdog.h>
 #include "hardware.h"
 #include "rtc.h"
 #include "debug.h"
@@ -22,6 +23,11 @@ void setup()
         delay(100);
     }
 
+    // 30 second WDT
+    // I'm not sure how long SPI flash chip erase takes,
+    // but I don't think I can set it longer than 32.768 s.
+    IWatchdog.begin(30000000);
+
     DEBUG->println("rtc_init");
     rtc_init();
     DEBUG->println("pulse_counter_init");
@@ -44,4 +50,5 @@ void loop()
     pulse_counter_loop();
     datalogger_loop();
     cli_loop();
+    IWatchdog.reload();
 }
