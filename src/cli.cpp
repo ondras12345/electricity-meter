@@ -414,6 +414,7 @@ void cli_loop()
     unsigned long now = millis();
     if (now - rs485_prev_report >= 1000UL)
     {
+        rs485_prev_report = now;
         RS485.println("rtc:");
         commander.execute("rtc", &RS485);
         RS485.println("pulse:");
