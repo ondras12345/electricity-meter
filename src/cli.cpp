@@ -222,12 +222,12 @@ static void cmnd_SPIflash(char *args, Stream *response)
     }
 
     // subcommands that need subcommand_args
-    else if (strcmp(subcommand_name, "rm") == 0)
-    {
-        response->println("rm does NOT reclaim space, just filename");
-        response->print("success: ");
-        response->println(SerialFlash.remove(subcommand_args));
-    }
+    //else if (strcmp(subcommand_name, "rm") == 0)
+    //{
+    //    response->println("rm does NOT reclaim space, just filename");
+    //    response->print("success: ");
+    //    response->println(SerialFlash.remove(subcommand_args));
+    //}
     else if (strcmp(subcommand_name, "create") == 0)
     {
         const char * filename = strsep(&subcommand_args, " ");
