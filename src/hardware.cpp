@@ -13,10 +13,9 @@ void hardware_init()
     pinMode(PIN_DIP_SW_1, INPUT_PULLDOWN);
     pinMode(PIN_DIP_SW_2, INPUT_PULLDOWN);
 
-    // TODO MODBUS
-    pinMode(PIN_MODBUS_DE, OUTPUT);
+    pinMode(PIN_RS485_DE, OUTPUT);
     // receive mode
-    digitalWrite(PIN_MODBUS_DE, LOW);
+    digitalWrite(PIN_RS485_DE, LOW);
 
     // TODO SPI flash
     pinMode(PIN_SPI_SS_FLASH, OUTPUT);

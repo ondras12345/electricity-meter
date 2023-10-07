@@ -10,7 +10,8 @@
 
 #define PIN_BTN_1 PB14
 
-#define PIN_MODBUS_DE PA1
+// see also platformio.ini
+#define PIN_RS485_DE PA1
 
 #define PIN_SPI_SS_FLASH PA4
 #define PIN_PULSE_COUNTER PA2

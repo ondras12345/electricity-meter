@@ -5,6 +5,7 @@
 #include <Commander-API-Commands.hpp>
 #include <Commander-IO.hpp>
 #include <SerialFlash.h>
+#include <ArduinoRS485.h>
 #include "Print_utils.h"
 #include "debug.h"
 #include "version.h"
@@ -396,10 +397,26 @@ void cli_init()
     commander.init();
     shell.attachCommander(&commander);
     shell.begin("elektromer");
+
+    RS485.begin(9600);
+    // TODO RS485 receive commands
+    // (That would make debugging harder)
+    //RS485.receive();
+    RS485.beginTransmission();
 }
 
 
 void cli_loop()
 {
     shell.update();
+
+    static unsigned long rs485_prev_report = 0;
+    unsigned long now = millis();
+    if (now - rs485_prev_report >= 1000UL)
+    {
+        RS485.println("rtc:");
+        commander.execute("rtc", &RS485);
+        RS485.println("pulse:");
+        commander.execute("pulse", &RS485);
+    }
 }
