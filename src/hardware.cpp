@@ -17,7 +17,6 @@ void hardware_init()
     // receive mode
     digitalWrite(PIN_RS485_DE, LOW);
 
-    // TODO SPI flash
     pinMode(PIN_SPI_SS_FLASH, OUTPUT);
     digitalWrite(PIN_SPI_SS_FLASH, HIGH);
 

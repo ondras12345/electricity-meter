@@ -75,3 +75,6 @@ bool rtc_set_date(uint8_t day, uint8_t month, uint8_t year)
     rtc.setDate(day, month, year);
     return true;
 }
+
+
+// TODO measure difference between RTC (LSE clock) & millis?
