@@ -11,7 +11,7 @@ typedef struct {
      * see notes/SPI-flash.ipynb).
      */
     uint16_t pulses;
-} datalogger_record_t;
+} __attribute__((packed)) datalogger_record_t;
 
 const char * datalogger_file_number_to_filename(uint_fast8_t);
 
