@@ -142,13 +142,13 @@ enum Pcf8563SqwPinMode {
 /**************************************************************************/
 class DateTime {
 public:
-  explicit DateTime(uint32_t t = SECONDS_FROM_1970_TO_2000);
+  DateTime(uint32_t t = SECONDS_FROM_1970_TO_2000);
   DateTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hour = 0,
            uint8_t min = 0, uint8_t sec = 0);
   DateTime(const DateTime &copy);
   DateTime(const char *date, const char *time);
   DateTime(const __FlashStringHelper *date, const __FlashStringHelper *time);
-  explicit DateTime(const char *iso8601date);
+  DateTime(const char *iso8601date);
   bool isValid() const;
   char *toString(char *buffer) const;
 
@@ -274,7 +274,7 @@ protected:
 /**************************************************************************/
 class TimeSpan {
 public:
-  explicit TimeSpan(int32_t seconds = 0);
+  TimeSpan(int32_t seconds = 0);
   TimeSpan(int16_t days, int8_t hours, int8_t minutes, int8_t seconds);
   TimeSpan(const TimeSpan &copy);
 
