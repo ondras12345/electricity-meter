@@ -133,6 +133,11 @@ static void cmnd_rtc(char *args, Stream *response)
         rtc_time.year(), rtc_time.month(), rtc_time.day(),
         rtc_time.hour(), rtc_time.minute(), rtc_time.second()
     );
+    response->printf(
+        "time_millis: %04u-%02u-%02uT%02u:%02u:%02uZ\r\n",
+        rtc_time_millis.year(), rtc_time_millis.month(), rtc_time_millis.day(),
+        rtc_time_millis.hour(), rtc_time_millis.minute(), rtc_time_millis.second()
+    );
     return;
 bad:
     response->println("usage: rtc [(set 2000-01-01T12:34:56Z)]");

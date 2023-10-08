@@ -5,7 +5,11 @@
 
 static STM32RTC& rtc = STM32RTC::getInstance();
 
+// A purely software RTC, used to measure drift of hardware RTC.
+static RTC_Millis rtc_millis;
+
 DateTime rtc_time;
+DateTime rtc_time_millis;
 
 
 void rtc_init()
@@ -19,6 +23,10 @@ void rtc_init()
     rtc.setClockSource(STM32RTC::LSE_CLOCK);
     rtc.setPrediv(32768U);
     rtc.begin();
+
+    rtc_refresh();
+
+    rtc_millis.begin(rtc_time);
 }
 
 
@@ -52,6 +60,8 @@ void rtc_refresh()
     //rtc_epoch_2000 = rtc.getY2kEpoch();
     rtc_time = DateTime(rtc_year, rtc_month, rtc_day,
                         rtc_hours, rtc_minutes, rtc_seconds);
+
+    rtc_time_millis = rtc_millis.now();
 }
 
 
@@ -59,6 +69,10 @@ void rtc_set_time(uint8_t hours, uint8_t minutes, uint8_t seconds)
 {
     // rtc.setTime does error checking internally
     rtc.setTime(hours, minutes, seconds);
+    DateTime tmp = rtc_millis.now();
+    rtc_millis.adjust(
+        DateTime(tmp.year(), tmp.month(), tmp.day(), hours, minutes, seconds)
+    );
 }
 
 
@@ -73,6 +87,10 @@ bool rtc_set_date(uint8_t day, uint8_t month, uint8_t year)
     if (!dt.isValid()) return false;
     // we don't need weekday
     rtc.setDate(day, month, year);
+    DateTime tmp = rtc_millis.now();
+    rtc_millis.adjust(
+        DateTime(year, month, day, tmp.hour(), tmp.minute(), tmp.second())
+    );
     return true;
 }
 
