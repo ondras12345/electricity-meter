@@ -370,7 +370,7 @@ usage:
 
 
 static Commander::API_t API_tree[] = {
-    apiElement("reset",         "Reset the MCU.",                           cmnd_reset),
+    //apiElement("reset",         "Reset the MCU.",                           cmnd_reset),
     apiElement("ver",           "Print out version info.",                  cmnd_ver),
     apiElement("pulse",         "Get pulse counter status.",                cmnd_pulse),
     apiElement("rtc",           "Get or set RTC time.",                     cmnd_rtc),
@@ -378,8 +378,8 @@ static Commander::API_t API_tree[] = {
     apiElement("SPIflash",      "Issue commands to SPI flash.",             cmnd_SPIflash),
     apiElement("datalogger",    "Read datalogger records from SPI flash.",  cmnd_datalogger),
     // commander pre-made commands
-    API_ELEMENT_MILLIS,
-    API_ELEMENT_UPTIME,
+    //API_ELEMENT_MILLIS,
+    //API_ELEMENT_UPTIME,
     // digitalRead, analogRead look too primitive to be useful. They also don't
     // validate args, that could potentially be dangerous.
 };
