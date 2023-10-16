@@ -113,12 +113,11 @@ static void cmnd_rtc(char *args, Stream *response)
             goto bad;
         }
         year -= 2000;
-        if (!rtc_set_date(day, month, year))
+        if (!rtc_set_datetime(year, month, day, hours, minutes, seconds))
         {
             response->println("error: invalid (illogical) date");
             goto bad;
         }
-        rtc_set_time(hours, minutes, seconds);
     }
     else
     {
@@ -132,11 +131,6 @@ static void cmnd_rtc(char *args, Stream *response)
         "time: %04u-%02u-%02uT%02u:%02u:%02uZ\r\n",
         rtc_time.year(), rtc_time.month(), rtc_time.day(),
         rtc_time.hour(), rtc_time.minute(), rtc_time.second()
-    );
-    response->printf(
-        "time_millis: %04u-%02u-%02uT%02u:%02u:%02uZ\r\n",
-        rtc_time_millis.year(), rtc_time_millis.month(), rtc_time_millis.day(),
-        rtc_time_millis.hour(), rtc_time_millis.minute(), rtc_time_millis.second()
     );
     return;
 bad:
