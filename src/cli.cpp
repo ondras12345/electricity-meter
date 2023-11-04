@@ -17,6 +17,7 @@
 
 static Shellminator shell(&Serial);
 static Commander commander;
+static bool RS485_enable;
 
 
 static void cmnd_reset(char *args, Stream *response)
@@ -397,17 +398,24 @@ void cli_init()
     shell.attachCommander(&commander);
     shell.begin("elektromer");
 
-    RS485.begin(9600);
-    // TODO RS485 receive commands
-    // (That would make debugging harder)
-    //RS485.receive();
-    RS485.beginTransmission();
+    RS485_enable = digitalRead(PIN_DIP_SW_2);
+    if (RS485_enable)
+    {
+        RS485.begin(9600);
+        // TODO RS485 receive commands
+        // (That would make debugging harder)
+        //RS485.receive();
+        RS485.beginTransmission();
+        // TODO end transmission to reduce power consumption ??
+    }
 }
 
 
 void cli_loop()
 {
     shell.update();
+
+    if (!RS485_enable) return;
 
     static unsigned long rs485_prev_report = 0;
     unsigned long now = millis();
