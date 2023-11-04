@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-latest=$(ls -t bin/firmware_*.hex | head -1)
+latest=$(ls -t bin/firmware_*.bin | head -1)
 echo "Latest file is $latest"
 stat -c "%y %n" "$latest"
 
@@ -13,5 +13,5 @@ echo "Modified $diff seconds ago."
 read -p "upload? [yN]" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    avrdude -v -p atmega328p -C "$(dirname "$0")/avrdude.conf" -c arduino -b 115200 -D -P /dev/ttyUSB0 -U flash:w:$latest:i
+    "$(dirname "$0")/upload" /dev/ttyUSB0 "$latest"
 fi
