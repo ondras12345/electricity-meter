@@ -360,6 +360,8 @@ static void cmnd_datalogger(char *args, Stream *response)
             t.hour(), t.minute(), t.second(),
             record.pulses
         );
+        // TODO this seems to fix USB CDC losing data.
+        if (i % 50 == 0) delay(10);
     }
     response->println("---");
     return;
