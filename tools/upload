@@ -3,4 +3,5 @@
 
 # $1 - device (/dev/ttySOMETHING)
 # $2 - .bin file
-stm32flash -g 0x8000000 -b 115200 -w "$2" "$1"
+#stm32flash -g 0x8000000 -b 115200 -w "$2" "$1"
+st-flash --reset --format binary write "$2" 0x8000000
