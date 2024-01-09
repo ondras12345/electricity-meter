@@ -318,16 +318,37 @@ bad:
 
 static void cmnd_datalogger(char *args, Stream *response)
 {
+    // -1 --> never flush (Well, almost. First loop will flush. Good enough.)
+    unsigned flush = -1;
+
     // We should probably only read one file at a time to prevent blocking the
     // system for too long.
     // We might as well have the user enter the data file number.
     unsigned int fileno = 0;
-    bool valid = (
-        sscanf(args, "%u", &fileno) == 1
-        && fileno < DATALOGGER_FILE_COUNT
-    );
+
     SerialFlashFile f;  // needs to be declared before goto
-    if (!valid)
+
+    char * arg_name = strsep(&args, " ");
+    char * arg_value = args;
+    if (arg_name == nullptr) goto usage;
+    else if (arg_value == nullptr) goto usage;
+    else if (strcmp(arg_name, "--flush") == 0)
+    {
+        sscanf(arg_value, "%u", &flush);
+        response->print("flush every n lines: ");
+        response->println(flush);
+    }
+    else if (strcmp(arg_name, "--file") == 0)
+    {
+        if (sscanf(args, "%u", &fileno) != 1)
+        {
+            response->println("invalid file_no");
+            goto usage;
+        }
+    }
+    else goto usage;
+
+    if (fileno >= DATALOGGER_FILE_COUNT)
     {
         response->println("invalid file_no");
         goto usage;
@@ -341,9 +362,8 @@ static void cmnd_datalogger(char *args, Stream *response)
     }
     response->println("---");
     response->println("# datetime\tenergy [1/10 Wh]");
-    // It might be faster to read the whole page,
+    // It might be faster to read a full page from SPIflash,
     // but I think Serial will be the bottleneck.
-    // TODO verify
     for (uint32_t i = 0; i < DATALOGGER_FILE_RECORDS; i++)
     {
         datalogger_record_t record;
@@ -360,14 +380,14 @@ static void cmnd_datalogger(char *args, Stream *response)
             t.hour(), t.minute(), t.second(),
             record.pulses
         );
-        // TODO this seems to fix USB CDC losing data.
-        if (i % 50 == 0) delay(10);
+        // https://github.com/stm32duino/Arduino_Core_STM32/issues/2243
+        if (i % flush == 0) response->flush();
     }
     response->println("---");
     return;
 usage:
     response->println(
-        "Usage: datalogger file_no"
+        "Usage: datalogger [--flush n] --file file_no"
     );
 }
 
