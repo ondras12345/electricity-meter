@@ -324,29 +324,34 @@ static void cmnd_datalogger(char *args, Stream *response)
     // We should probably only read one file at a time to prevent blocking the
     // system for too long.
     // We might as well have the user enter the data file number.
-    unsigned int fileno = 0;
+    unsigned fileno = -1;  // -1 will fail --> --file is not optional
 
     SerialFlashFile f;  // needs to be declared before goto
 
     char * arg_name = strsep(&args, " ");
-    char * arg_value = args;
-    if (arg_name == nullptr) goto usage;
-    else if (arg_value == nullptr) goto usage;
-    else if (strcmp(arg_name, "--flush") == 0)
+    char * arg_value = strsep(&args, " ");
+    while (arg_name != nullptr)
     {
-        sscanf(arg_value, "%u", &flush);
-        response->print("flush every n lines: ");
-        response->println(flush);
-    }
-    else if (strcmp(arg_name, "--file") == 0)
-    {
-        if (sscanf(args, "%u", &fileno) != 1)
+        if (arg_value == nullptr) goto usage;
+        if (strcmp(arg_name, "--flush") == 0)
         {
-            response->println("invalid file_no");
-            goto usage;
+            sscanf(arg_value, "%u", &flush);
+            response->print("flush every n lines: ");
+            response->println(flush);
         }
+        else if (strcmp(arg_name, "--file") == 0)
+        {
+            if (sscanf(arg_value, "%u", &fileno) != 1)
+            {
+                response->println("invalid file_no");
+                goto usage;
+            }
+        }
+        else goto usage;
+
+        arg_name = strsep(&args, " ");
+        arg_value = strsep(&args, " ");
     }
-    else goto usage;
 
     if (fileno >= DATALOGGER_FILE_COUNT)
     {
