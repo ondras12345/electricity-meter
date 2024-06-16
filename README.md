@@ -24,7 +24,7 @@ Some notes:
 - The onewire bus connector is currently unused, but it should be easy enough
   to add DS18B20 temperature sensors.
 - DS3231 RTC is necessary because the internal RTC on my STM32F103 was not
-  precise enough. Cut JP1 (battery power to STM32 VBAT) if you decide to use
+  accurate enough. Cut JP1 (battery power to STM32 VBAT) if you decide to use
   it too.
 - The micro USB connector was a bad idea. I ended up replacing it with wires
   soldered directly to the board after accidentally breaking it off several
