@@ -850,9 +850,6 @@
     (pin "2" (uuid 6f757f81-86dc-4d5b-aa3d-5b374d02ed59))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "R20") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "R20") (unit 1)
         )
@@ -889,7 +886,7 @@
   (symbol (lib_id "power:GND") (at 71.12 91.44 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1a21c08f-2ce1-4913-8632-366904bb9336)
-    (property "Reference" "#PWR033" (at 71.12 97.79 0)
+    (property "Reference" "#PWR053" (at 71.12 97.79 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 71.12 95.5731 0)
@@ -904,9 +901,6 @@
     (pin "1" (uuid b9966eef-b0de-4cec-b6a7-7af65e845604))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR033") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR053") (unit 1)
         )
@@ -917,7 +911,7 @@
   (symbol (lib_id "Device:R") (at 105.41 72.39 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3589c0e2-89c9-43fe-8362-f97ef92491fa)
-    (property "Reference" "R17" (at 105.41 67.2297 90)
+    (property "Reference" "R21" (at 105.41 67.2297 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "10" (at 105.41 69.6539 90)
@@ -933,9 +927,6 @@
     (pin "2" (uuid d95236d0-5ea1-436a-ae3d-8c837644ae15))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "R17") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "R21") (unit 1)
         )
@@ -972,7 +963,7 @@
   (symbol (lib_id "power:+3V3") (at 88.9 60.96 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 477a0ddd-c53d-41b0-ba66-2abbd3f4ec6f)
-    (property "Reference" "#PWR038" (at 88.9 64.77 0)
+    (property "Reference" "#PWR054" (at 88.9 64.77 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3V3" (at 88.9 56.8269 0)
@@ -987,9 +978,6 @@
     (pin "1" (uuid 1c129adc-1918-4131-8df7-76023b832fe0))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR038") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR054") (unit 1)
         )
@@ -1000,7 +988,7 @@
   (symbol (lib_id "power:GND") (at 50.8 120.65 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 500c6978-9e66-4503-ab6e-79a806c53a9d)
-    (property "Reference" "#PWR040" (at 50.8 127 0)
+    (property "Reference" "#PWR052" (at 50.8 127 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 50.927 125.0442 0)
@@ -1015,9 +1003,6 @@
     (pin "1" (uuid 84b048c3-cf6d-48a0-a967-b33a181fa814))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR040") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR052") (unit 1)
         )
@@ -1028,7 +1013,7 @@
   (symbol (lib_id "Diode:SM712_SOT23") (at 138.43 90.17 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5bc82b76-b66c-4818-bc5f-63dfad738d22)
-    (property "Reference" "D9" (at 138.43 84.7811 0)
+    (property "Reference" "D13" (at 138.43 84.7811 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "SM712_SOT23" (at 138.43 87.2053 0)
@@ -1048,9 +1033,6 @@
     (pin "3" (uuid ba24864d-6852-4804-8d4f-973a5bef715c))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "D9") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "D13") (unit 1)
         )
@@ -1138,7 +1120,7 @@
   (symbol (lib_id "Device:C") (at 50.8 114.3 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 98501c55-3188-4301-b33f-4ca531ea0508)
-    (property "Reference" "C8" (at 53.721 113.1316 0)
+    (property "Reference" "C14" (at 53.721 113.1316 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100n" (at 53.721 115.443 0)
@@ -1154,9 +1136,6 @@
     (pin "2" (uuid 1bbc42a9-7a0d-43eb-bf0b-90d8156e64e9))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "C8") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "C14") (unit 1)
         )
@@ -1167,7 +1146,7 @@
   (symbol (lib_id "Interface_UART:MAX3485") (at 88.9 74.93 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a03b3df2-2e95-450a-b818-bc6268607760)
-    (property "Reference" "U4" (at 91.0941 60.6257 0)
+    (property "Reference" "U6" (at 91.0941 60.6257 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "MAX3485EESA" (at 91.0941 63.0499 0)
@@ -1192,9 +1171,6 @@
     (pin "8" (uuid 2554e69a-611a-4df8-aefc-06105f3ef728))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "U4") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "U6") (unit 1)
         )
@@ -1230,7 +1206,7 @@
   (symbol (lib_id "Device:C") (at 38.1 114.3 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid ab9ac4f4-9f4e-4d06-b674-2495e4f4f747)
-    (property "Reference" "C7" (at 41.021 113.1316 0)
+    (property "Reference" "C13" (at 41.021 113.1316 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10u" (at 41.021 115.443 0)
@@ -1246,9 +1222,6 @@
     (pin "2" (uuid 217c33e7-8fe7-49cb-bb60-fd5aae046a8a))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "C7") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "C13") (unit 1)
         )
@@ -1259,7 +1232,7 @@
   (symbol (lib_id "power:GND") (at 88.9 92.71 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid b90f4673-5afb-4112-8cc1-1ccef681248e)
-    (property "Reference" "#PWR034" (at 88.9 99.06 0)
+    (property "Reference" "#PWR055" (at 88.9 99.06 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 88.9 96.8431 0)
@@ -1274,9 +1247,6 @@
     (pin "1" (uuid 8529f0fb-be59-4d5e-be80-d962932d3816))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR034") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR055") (unit 1)
         )
@@ -1287,7 +1257,7 @@
   (symbol (lib_id "power:+3V3") (at 50.8 107.95 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid bd5e3e58-2810-4301-8859-f6323a31a879)
-    (property "Reference" "#PWR039" (at 50.8 111.76 0)
+    (property "Reference" "#PWR051" (at 50.8 111.76 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3V3" (at 51.181 103.5558 0)
@@ -1302,9 +1272,6 @@
     (pin "1" (uuid 75cf21f7-1915-4852-baf3-29cf1f2718af))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR039") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR051") (unit 1)
         )
@@ -1315,7 +1282,7 @@
   (symbol (lib_id "Device:R") (at 113.03 76.2 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c77993d8-5034-4eff-a446-8a68c9986c8e)
-    (property "Reference" "R19" (at 114.808 74.9879 0)
+    (property "Reference" "R23" (at 114.808 74.9879 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "150 / 0.25W" (at 114.808 77.4121 0)
@@ -1331,9 +1298,6 @@
     (pin "2" (uuid aa84f326-629b-4cbb-9fb6-36cb193bf9b2))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "R19") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "R23") (unit 1)
         )
@@ -1344,7 +1308,7 @@
   (symbol (lib_id "power:GND") (at 138.43 95.25 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid e34c9f90-1f7d-4d03-b0d9-1ea45b2a073f)
-    (property "Reference" "#PWR035" (at 138.43 101.6 0)
+    (property "Reference" "#PWR057" (at 138.43 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 138.43 99.3831 0)
@@ -1359,9 +1323,6 @@
     (pin "1" (uuid e8a68954-2143-4eed-94ce-c03de7456c2f))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "#PWR035") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "#PWR057") (unit 1)
         )
@@ -1372,7 +1333,7 @@
   (symbol (lib_id "Device:NetTie_2") (at 123.19 80.01 0) (unit 1)
     (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid eae8bcc4-2f3c-4fb5-87db-c35844fa634a)
-    (property "Reference" "NT1" (at 123.19 81.7301 0)
+    (property "Reference" "NT5" (at 123.19 81.7301 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "NetTie_2" (at 123.19 78.2899 0)
@@ -1388,9 +1349,6 @@
     (pin "2" (uuid 55dd56b2-b05d-465c-93b1-cea34c78bd07))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "NT1") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "NT5") (unit 1)
         )
@@ -1401,7 +1359,7 @@
   (symbol (lib_id "Device:R") (at 105.41 80.01 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ff9c57e5-6853-49b2-aa9a-a4f36c2bae0f)
-    (property "Reference" "R18" (at 105.41 74.8497 90)
+    (property "Reference" "R22" (at 105.41 74.8497 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "10" (at 105.41 77.2739 90)
@@ -1417,9 +1375,6 @@
     (pin "2" (uuid ef48470c-d88f-433e-a2c5-6bbe465fb30c))
     (instances
       (project "electricity-meter"
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
-          (reference "R18") (unit 1)
-        )
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
           (reference "R22") (unit 1)
         )

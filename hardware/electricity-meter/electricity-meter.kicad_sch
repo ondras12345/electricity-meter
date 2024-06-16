@@ -5384,9 +5384,6 @@
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
           (reference "#PWR050") (unit 1)
         )
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
-          (reference "#PWR041") (unit 1)
-        )
       )
     )
   )
@@ -5501,9 +5498,6 @@
       (project "electricity-meter"
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
           (reference "JP3") (unit 1)
-        )
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
-          (reference "JP1") (unit 1)
         )
       )
     )
@@ -5963,13 +5957,13 @@
   )
 
   (symbol (lib_id "Memory_Flash:MX25L3233FM1") (at 222.25 144.78 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp no)
     (uuid 49bbaca0-b2e9-4b7e-a1ff-174a9bc09669)
-    (property "Reference" "U5" (at 230.632 143.5679 0)
+    (property "Reference" "U5" (at 224.79 157.48 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "MX25L3233FM1" (at 230.632 145.9921 0)
-      (effects (font (size 1.27 1.27)) (justify left) hide)
+    (property "Value" "MX25L3233FM1" (at 224.79 160.02 0)
+      (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Package_SO:SOP-8_3.9x4.9mm_P1.27mm" (at 222.25 160.02 0)
       (effects (font (size 1.27 1.27)) hide)
@@ -6175,9 +6169,6 @@
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
           (reference "#PWR049") (unit 1)
         )
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
-          (reference "#PWR042") (unit 1)
-        )
       )
     )
   )
@@ -6381,9 +6372,6 @@
       (project "electricity-meter"
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
           (reference "#PWR046") (unit 1)
-        )
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
-          (reference "#PWR040") (unit 1)
         )
       )
     )
@@ -6642,9 +6630,6 @@
       (project "electricity-meter"
         (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec"
           (reference "J7") (unit 1)
-        )
-        (path "/ff3d9e8d-ce05-4912-9770-c80bf98d8dec/b212e67d-a601-4187-859b-ab25dade484d"
-          (reference "J6") (unit 1)
         )
       )
     )

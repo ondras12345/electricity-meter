@@ -1,14 +1,3 @@
-HEX_FILE = .pio/build/uno/firmware.hex
-## 		VARIABLES
-## Set environment variables or specify on the command line to override.
-## Either of these should work:
-## $ SSH_HOST=test make upload_remote
-## $ make upload_remote SSH_HOST=test
-##
-## TODO variables
-
-
-##
 ## 		TARGETS
 .PHONY: all
 all:            ## Compile, default target for Vim
