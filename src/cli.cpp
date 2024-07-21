@@ -460,7 +460,8 @@ void cli_loop()
 
     }
 
-    if (now - rs485_prev_report >= 10000UL)
+    bool report_rate = digitalRead(PIN_DIP_SW_1);
+    if (now - rs485_prev_report >= (report_rate ? 10000UL : 30000UL))
     {
         rs485_prev_report = now;
         transmitting = true;
