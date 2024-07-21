@@ -20,6 +20,13 @@ static Commander commander;
 static bool RS485_enable;
 
 
+static uint16_t amplitude_percentage(uint32_t amplitude)
+{
+    const uint16_t max_reading = (1<<ADC_RESOLUTION_BITS) - 1;
+    return amplitude / 256U * 10000U / max_reading;
+}
+
+
 static void cmnd_reset(char *args, Stream *response)
 {
     response->println("Resetting");
@@ -72,9 +79,7 @@ static void cmnd_pulse(char *args, Stream *response)
     response->print("  amplitude: ");
     if (ap.max > ap.min)
     {
-        uint32_t amplitude = ap.max - ap.min;
-        const uint16_t max_reading = (1<<ADC_RESOLUTION_BITS) - 1;
-        uint32_t percentage = amplitude / 256 * 10000 / max_reading;
+        uint16_t percentage = amplitude_percentage(ap.max - ap.min);
         response->printf(
             "%u.%02u%%\r\n",
             percentage / 100,
@@ -428,12 +433,9 @@ void cli_init()
     RS485_enable = digitalRead(PIN_DIP_SW_2);
     if (RS485_enable)
     {
-        RS485.begin(9600);
-        // TODO RS485 receive commands
-        // (That would make debugging harder)
-        //RS485.receive();
-        RS485.beginTransmission();
-        // TODO end transmission to reduce power consumption ??
+        RS485.begin(19200);
+        // we call begin / end transmission transmission in cli_loop to reduce
+        // power consumption
     }
 }
 
@@ -446,12 +448,40 @@ void cli_loop()
 
     static unsigned long rs485_prev_report = 0;
     unsigned long now = millis();
-    if (now - rs485_prev_report >= 1000UL)
+    static bool transmitting = false;
+    if (transmitting &&
+        (SERIAL_TX_BUFFER_SIZE - RS485.availableForWrite() - 1) == 0
+        )
+    {
+        transmitting = false;
+        // endTransmission calls flush(), so we wait until the TX buffer is
+        // empty to avoid blocking main loop
+        RS485.endTransmission();
+
+    }
+
+    if (now - rs485_prev_report >= 10000UL)
     {
         rs485_prev_report = now;
-        RS485.println("rtc:");
-        commander.execute("rtc", &RS485);
-        RS485.println("pulse:");
-        commander.execute("pulse", &RS485);
+        transmitting = true;
+        RS485.beginTransmission();
+        analogpulse_t ap = pulse_counter_get_analogpulse();
+        uint16_t percentage = amplitude_percentage(ap.max - ap.min);
+        // 127 bytes per packet max
+        // (see https://ptvo.info/zigbee-configurable-firmware-features/uart/ )
+        // 16 bytes timestamp
+        // 1 byte \t
+        // 10 bytes count
+        // 1 byte \t
+        // 6 bytes amplitude (percent): 100.00
+        // no \r needed
+        // 1 byte \n
+        RS485.printf(
+            "%04u%02u%02uT%02u%02u%02uZ\t%10" PRIu32 "\t%3u.%2u\n",
+            rtc_time.year(), rtc_time.month(), rtc_time.day(),
+            rtc_time.hour(), rtc_time.minute(), rtc_time.second(),
+            pulse_counter_get_count(),
+            percentage / 100U, percentage % 100U
+        );
     }
 }
