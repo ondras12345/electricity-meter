@@ -1,0 +1,9 @@
+Board type: CC2530
+Device type: Router
+Location description: elektromer
+Status LED: P10 (Inversed), Sending reports
+
+Output pins:
+P11: Output 1, GPIO, Pull-down (Role: Generic)
+P02: Output 2, UART (UART: 19200 8N1, Packet end: 0x0A, Byte: 239)
+P00: Output 3, DS18B20, External pull-up (Sensor ID (optional, hex): AA-BB-CC-DD-EE-FF-01-02, Mode: Single, Auto-detect)
