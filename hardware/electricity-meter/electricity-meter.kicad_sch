@@ -3898,6 +3898,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 98478dc8-dcb9-4246-a34c-077a32496773)
   )
+  (text "mod: bridged over D9 to avoid insufficient\ninput voltage for zigbee board (3v3 read 2.94V after AZ1117)"
+    (at 168.91 119.38 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid d32d5461-6669-495c-80d3-3fd5714f936f)
+  )
   (text "TODO check USB D+ pin resistor https://stm32-base.org/boards/STM32F103C8T6-Blue-Pill.html"
     (at 114.3 114.3 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
