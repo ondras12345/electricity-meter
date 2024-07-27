@@ -17,7 +17,6 @@
 
 static Shellminator shell(&Serial);
 static Commander commander;
-static bool RS485_enable;
 
 
 static uint16_t amplitude_percentage(uint32_t amplitude)
@@ -430,21 +429,15 @@ void cli_init()
     shell.attachCommander(&commander);
     shell.begin("elektromer");
 
-    RS485_enable = digitalRead(PIN_DIP_SW_2);
-    if (RS485_enable)
-    {
-        RS485.begin(19200);
-        // we call begin / end transmission transmission in cli_loop to reduce
-        // power consumption
-    }
+    RS485.begin(19200);
+    // we call begin / end transmission transmission in cli_loop to reduce
+    // power consumption
 }
 
 
 void cli_loop()
 {
     shell.update();
-
-    if (!RS485_enable) return;
 
     static unsigned long rs485_prev_report = 0;
     unsigned long now = millis();
@@ -460,8 +453,9 @@ void cli_loop()
 
     }
 
+    bool RS485_enable = digitalRead(PIN_DIP_SW_2);
     bool report_rate = digitalRead(PIN_DIP_SW_1);
-    if (now - rs485_prev_report >= (report_rate ? 10000UL : 30000UL))
+    if (RS485_enable && now - rs485_prev_report >= (report_rate ? 10000UL : 30000UL))
     {
         rs485_prev_report = now;
         transmitting = true;
