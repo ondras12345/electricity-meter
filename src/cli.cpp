@@ -478,7 +478,7 @@ void cli_loop()
         // no \r needed
         // 1 byte \n
         RS485.printf(
-            "%04u%02u%02uT%02u%02u%02uZ\t%10" PRIu32 "\t%3u.%2u\n",
+            "%04u%02u%02uT%02u%02u%02uZ\t%10" PRIu32 "\t%3u.%02u\n",
             rtc_time.year(), rtc_time.month(), rtc_time.day(),
             rtc_time.hour(), rtc_time.minute(), rtc_time.second(),
             pulse_counter_get_count(),
