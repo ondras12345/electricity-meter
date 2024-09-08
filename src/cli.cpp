@@ -435,7 +435,7 @@ void cli_init()
 }
 
 /// produce a checksum character
-/// python equivalent: ck = sum(msg) % 94 + 33
+/// python equivalent: ck = sum(msg) % 256 % 94 + 33
 static char chksum(const char * msg){
     uint8_t checksum = 0;
     while (*msg)
