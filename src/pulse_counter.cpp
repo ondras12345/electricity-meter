@@ -66,7 +66,8 @@ static void ISR_timer_sampling()
 
 void pulse_counter_init()
 {
-    ap.min_amplitude = 205;  // 5 % of ADC range
+    //ap.min_amplitude = 205;  // 5 % of ADC range
+    ap.min_amplitude = 185;  // a bit lower
     ap.decay_speed = 16;
     analogpulse_init(&ap);
 
