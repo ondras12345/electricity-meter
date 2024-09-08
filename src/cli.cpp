@@ -434,6 +434,20 @@ void cli_init()
     // power consumption
 }
 
+/// produce a checksum character
+/// python equivalent: ck = sum(msg) % 94 + 33
+static char chksum(const char * msg){
+    uint8_t checksum = 0;
+    while (*msg)
+    {
+        checksum += *msg;
+        msg++;
+    }
+    checksum %= ('~' - '!' + 1);
+    checksum += '!';
+    return checksum;
+}
+
 
 void cli_loop()
 {
@@ -461,22 +475,36 @@ void cli_loop()
         transmitting = true;
         RS485.beginTransmission();
         analogpulse_t ap = pulse_counter_get_analogpulse();
-        uint16_t percentage = amplitude_percentage(ap.max - ap.min);
+
         // 127 bytes per packet max
         // (see https://ptvo.info/zigbee-configurable-firmware-features/uart/ )
         // 16 bytes timestamp
         // 1 byte \t
         // 10 bytes count
         // 1 byte \t
-        // 6 bytes amplitude (percent): 100.00
+        // 4 bytes ap.max
+        // 1 byte \t
+        // 4 bytes ap.min
+        // 1 byte \t
+        // 1 byte checksum
         // no \r needed
         // 1 byte \n
-        RS485.printf(
-            "%04u%02u%02uT%02u%02u%02uZ\t%10" PRIu32 "\t%3u.%02u\n",
+        char msg[64] = "";
+        size_t msglen = snprintf(
+            msg, sizeof msg,
+            "%04u%02u%02uT%02u%02u%02uZ\t%10" PRIu32 "\t%4u\t%4u\t",
             rtc_time.year(), rtc_time.month(), rtc_time.day(),
             rtc_time.hour(), rtc_time.minute(), rtc_time.second(),
             pulse_counter_get_count(),
-            percentage / 100U, percentage % 100U
+            uint16_t(ap.max >> 8), uint16_t(ap.min >> 8)
         );
+        if (msglen >= sizeof(msg) -2) return;  // not enough space, this should never happen
+
+        // append checksum
+        msg[msglen] = chksum(msg);  // this overwrites original \0
+        msg[msglen+1] = '\n';
+        msg[msglen+2] = '\0';
+
+        RS485.print(msg);
     }
 }
