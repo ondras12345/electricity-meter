@@ -1,6 +1,8 @@
 Board type: CC2530
 Device type: Router
+Model ID: ptvo.elektromer
 Location description: elektromer
+Enable watchdog timer: Yes
 Status LED: P10 (Inversed), Sending reports
 
 Output pins:
